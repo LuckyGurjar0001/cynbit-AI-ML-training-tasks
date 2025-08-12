@@ -4,7 +4,6 @@ import seaborn as sns
 from textblob import TextBlob
 from wordcloud import WordCloud
 
-# Load the dataset
 df = pd.read_csv('flipkart_product.csv')
 
 # Data Cleaning
@@ -17,8 +16,7 @@ df['Rate'] = pd.to_numeric(df['Rate'], errors='coerce')
 # Drop rows with missing values in Rate column
 df = df.dropna(subset=['Rate'])
 
-# Basic statistics
-print("=== Basic Statistics ===")
+print(" basic calculation")
 print(f"Total products: {len(df['ProductName'].unique())}")
 print(f"Total reviews: {len(df)}")
 print(f"Average price: ₹{df['Price'].mean():.2f}")
@@ -55,7 +53,6 @@ def get_sentiment(text):
 
 df['Sentiment'] = df['Summary'].apply(get_sentiment)
 
-# Sentiment distribution
 plt.figure(figsize=(8, 6))
 df['Sentiment'].value_counts().plot(kind='pie', autopct='%1.1f%%')
 plt.title('Sentiment Analysis of Reviews')
@@ -83,6 +80,6 @@ plt.title('Most Common Words in Reviews')
 plt.savefig('wordcloud.png')  # Save the plot
 plt.show()
 
-# Save cleaned data
 df.to_csv('cleaned_flipkart_reviews.csv', index=False)
+
 print("\nCleaned data saved to 'cleaned_flipkart_reviews.csv'")
