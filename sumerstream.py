@@ -2,7 +2,6 @@ import streamlit as st
 from transformers import pipeline
 import os
 
-# Suppress unnecessary warnings
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
 @st.cache_resource
@@ -28,12 +27,10 @@ def summarize_text(text):
     except Exception as e:
         st.error(f"Summarization failed: {str(e)}")
         return []
-
-# App UI
+        
 st.set_page_config(page_title="Text Summarizer", layout="wide")
 st.title("📝 Text Summarizer Tool")
 
-# Input area
 with st.container():
     user_input = st.text_area(
         "Paste your text here (min. 50 characters for best results):",
@@ -41,7 +38,6 @@ with st.container():
         placeholder="e.g., news articles, research papers, long emails..."
     )
 
-# Summarize button
 if st.button("Summarize", type="primary"):
     if len(user_input) < 50:
         st.warning("Please enter at least 50 characters for a meaningful summary.")
@@ -56,4 +52,5 @@ if st.button("Summarize", type="primary"):
                 for point in summary_points:
                     st.markdown(f"- {point}")
             else:
+
                 st.error("Failed to generate summary. Please try again.")
